@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Ôn Tập Giữa HK1 - Tiếng Anh 11 - Đề 14</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9;
+        }
+        
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Bubble Fill style for Scantron */
+        .bubble-input {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 1.5px solid #475569;
+            border-radius: 50%;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background-color: #fff;
+        }
+        .bubble-input:checked {
+            background-color: #1e293b;
+            border-color: #0f172a;
+            box-shadow: inset 0 0 0 2px #e2e8f0;
+        }
+        .bubble-input:hover {
+            border-color: #2563eb;
+            transform: scale(1.1);
+        }
+        
+        /* Answer status styles after grading */
+        .bubble-correct {
+            background-color: #22c55e !important;
+            border-color: #16a34a !important;
+            box-shadow: 0 0 0 2px #bbf7d0;
+        }
+        .bubble-wrong {
+            background-color: #ef4444 !important;
+            border-color: #dc2626 !important;
+            box-shadow: 0 0 0 2px #fecaca;
+        }
+
+        /* Scantron specific grid styles */
+        .scantron-paper {
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Laser Beam Scanner Animation */
+        #scanner-beam {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(180deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.8) 50%, rgba(29, 78, 216, 1) 100%);
+            box-shadow: 0 0 15px 5px rgba(59, 130, 246, 0.75), 0 0 30px 10px rgba(37, 99, 235, 0.5);
+            display: none;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        @keyframes scanAnimation {
+            0% { top: 0%; opacity: 1; }
+            50% { top: 98%; opacity: 1; }
+            100% { top: 0%; opacity: 0.8; }
+        }
+
+        .scanning #scanner-beam {
+            display: block;
+            animation: scanAnimation 2.5s ease-in-out infinite;
+        }
+
+        /* Listening Audio Player Custom styling */
+        .audio-player-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- HEADER / NAVIGATION TOOLBAR -->
+    <header class="sticky top-0 z-40 bg-slate-900 text-white shadow-md border-b border-slate-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-sm tracking-wide">ĐỀ 14</span>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base leading-tight">ĐỀ ÔN TẬP GIỮA HK I - TIẾNG ANH 11</h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Thời gian: 45 phút | Nội dung 100% chuẩn cấu trúc</p>
+                </div>
+            </div>
+
+            <!-- CONTROLS & TIMER -->
+            <div class="flex items-center space-x-3 sm:space-x-6">
+                <!-- Countdown Timer -->
+                <div class="flex items-center bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700">
+                    <i class="fa-regular fa-clock text-blue-400 mr-2 text-lg"></i>
+                    <span id="timer-display" class="font-mono text-lg font-bold text-amber-400">45:00</span>
+                    <button id="btn-toggle-timer" onclick="toggleTimer()" class="ml-2.5 text-xs bg-slate-700 hover:bg-slate-600 text-slate-200 px-2 py-1 rounded transition" title="Bắt đầu/Tạm dừng">
+                        <i id="timer-icon" class="fa-solid fa-play"></i>
+                    </button>
+                    <button onclick="resetTimer()" class="ml-1 text-xs text-slate-400 hover:text-slate-200 p-1" title="Đặt lại">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+
+                <!-- Submit Button -->
+                <button onclick="confirmSubmit()" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold px-4 py-2 rounded-lg shadow-md transition transform active:scale-95 flex items-center space-x-2 text-sm sm:text-base">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Nộp Bài</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT LAYOUT -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-2 sm:px-4 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- LEFT COLUMN: QUESTION PAPER (Lg: 7 cols) -->
+        <section class="lg:col-span-7 flex flex-col space-y-6">
+            
+            <!-- ENHANCED AUDIO PLAYER & FILE UPLOADER SECTION -->
+            <div class="audio-player-card rounded-xl p-4 text-white shadow-lg border border-slate-800 space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-700/80 pb-2">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-headphones text-blue-400 text-lg"></i>
+                        <h2 class="font-semibold text-sm sm:text-base">Bài Nghe Tiếng Anh (Listening Player)</h2>
+                    </div>
+                    <span class="text-xs bg-blue-900/80 text-blue-300 px-2.5 py-0.5 rounded-full border border-blue-700/50">Phần I (Listening)</span>
+                </div>
+                
+                <!-- File Picker Input for Local MP3 -->
+                <div class="bg-slate-800/90 p-3 rounded-lg border border-dashed border-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3">
+                    <div class="flex items-center space-x-2.5 text-xs text-slate-300">
+                        <i class="fa-solid fa-file-audio text-amber-400 text-xl"></i>
+                        <div>
+                            <p class="font-medium text-slate-200">Tải bài nghe từ thiết bị của bạn:</p>
+                            <p id="loaded-filename" class="text-[11px] text-slate-400 italic">Chưa chọn file (Chọn file mp3 đính kèm của bạn để phát)</p>
+                        </div>
+                    </div>
+                    <label class="cursor-pointer bg-blue-600 hover:bg-blue-500 text-white font-medium text-xs px-3.5 py-2 rounded-lg transition shrink-0 flex items-center space-x-1.5 shadow">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>Chọn file MP3</span>
+                        <input type="file" id="local-audio-file" accept="audio/*" onchange="loadLocalAudio(event)" class="hidden">
+                    </label>
+                </div>
+
+                <!-- Custom Audio Control Toolbar -->
+                <div class="bg-slate-800 p-3 rounded-lg border border-slate-700 space-y-3">
+                    <audio id="main-audio-player" class="hidden"></audio>
+
+                    <!-- Time & Progress Bar -->
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-xs text-slate-300 font-mono">
+                            <span id="audio-curr-time">00:00</span>
+                            <span id="audio-dur-time">00:00</span>
+                        </div>
+                        <input type="range" id="audio-seek-bar" value="0" min="0" max="100" step="0.1" oninput="seekAudio(this.value)" class="w-full h-1.5 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500">
+                    </div>
+
+                    <!-- Player Actions -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs">
+                        <!-- Play/Pause & Rewind/Forward -->
+                        <div class="flex items-center space-x-2">
+                            <button onclick="skipAudio(-5)" class="bg-slate-700 hover:bg-slate-600 px-2.5 py-1.5 rounded text-slate-200 transition" title="Lùi 5 giây">
+                                <i class="fa-solid fa-rotate-left"></i> -5s
+                            </button>
+                            <button id="btn-play-audio" onclick="toggleAudioPlay()" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-4 py-1.5 rounded-lg transition flex items-center space-x-1.5">
+                                <i id="audio-play-icon" class="fa-solid fa-play"></i>
+                                <span id="audio-play-text">Phát</span>
+                            </button>
+                            <button onclick="skipAudio(5)" class="bg-slate-700 hover:bg-slate-600 px-2.5 py-1.5 rounded text-slate-200 transition" title="Tiến 5 giây">
+                                +5s <i class="fa-solid fa-rotate-right"></i>
+                            </button>
+                        </div>
+
+                        <!-- Speed Controls -->
+                        <div class="flex items-center space-x-1 bg-slate-900/60 p-1 rounded-lg border border-slate-700">
+                            <span class="text-[10px] text-slate-400 px-1 font-semibold">Tốc độ:</span>
+                            <button onclick="setPlaybackSpeed(0.75)" class="speed-btn px-1.5 py-0.5 rounded text-[11px] hover:bg-slate-700">0.75x</button>
+                            <button onclick="setPlaybackSpeed(1.0)" class="speed-btn px-1.5 py-0.5 rounded text-[11px] bg-blue-600 text-white font-bold">1x</button>
+                            <button onclick="setPlaybackSpeed(1.25)" class="speed-btn px-1.5 py-0.5 rounded text-[11px] hover:bg-slate-700">1.25x</button>
+                            <button onclick="setPlaybackSpeed(1.5)" class="speed-btn px-1.5 py-0.5 rounded text-[11px] hover:bg-slate-700">1.5x</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS DISPLAY BOX -->
+            <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden flex flex-col">
+                <div class="bg-slate-100 px-5 py-3 border-b border-slate-200 flex items-center justify-between">
+                    <h2 class="font-bold text-slate-700 flex items-center text-lg">
+                        <i class="fa-solid fa-file-lines text-blue-600 mr-2.5"></i>
+                        ĐỀ THI TIẾNG ANH 11
+                    </h2>
+                    <span class="text-xs text-slate-500 italic">Tick chọn đáp án vào Phiếu Trả Lời bên phải</span>
+                </div>
+
+                <div class="p-4 sm:p-6 space-y-8 overflow-y-auto max-h-[calc(100vh-250px)]" id="questions-container">
+                    
+                    <!-- SECTION I: LISTENING -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <h3 class="font-bold text-blue-900 uppercase text-base border-l-4 border-blue-600 pl-3 mb-4">
+                            I. LISTENING (2.5 points)
+                        </h3>
+
+                        <!-- PART 1 -->
+                        <div class="mb-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-semibold text-slate-800 mb-2">Part 1. Listen to an interview with an expert about the generation gap. Choose the correct answer A, B, C or D.</h4>
+                            <p class="text-xs text-slate-500 mb-4 italic">(You will listen to the recording TWICE)</p>
+
+                            <div class="space-y-4">
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-medium text-slate-800">Question 1. Dr. Anna Hayes is a _____________</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 text-sm text-slate-700">
+                                        <div>A. psychologist</div>
+                                        <div>B. sociologist</div>
+                                        <div>C. teacher</div>
+                                        <div>D. journalist</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-medium text-slate-800">Question 2. What does Dr. Hayes say about technology and the generation gap?</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 text-sm text-slate-700">
+                                        <div>A. It is the only cause of the gap.</div>
+                                        <div>B. It closed the gap.</div>
+                                        <div>C. It has no effect on the gap.</div>
+                                        <div>D. It made the gap grow faster.</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-medium text-slate-800">Question 3. Which is an example of different communication styles?</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 text-sm text-slate-700">
+                                        <div>A. A teenager calls, but a grandparent texts.</div>
+                                        <div>B. Both prefer emails.</div>
+                                        <div>C. A teenager texts, but a grandparent calls.</div>
+                                        <div>D. Both prefer video calls.</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-medium text-slate-800">Question 4. Which topic is NOT mentioned as viewed differently today?</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 text-sm text-slate-700">
+                                        <div>A. Marriage</div>
+                                        <div>B. Education</div>
+                                        <div>C. Career choices</div>
+                                        <div>D. Personal freedom</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-medium text-slate-800">Question 5. A teenager prefers texting, but his grandmother prefers phone calls. What would Dr. Hayes most likely suggest?</p>
+                                    <div class="grid grid-cols-1 gap-1.5 mt-2 text-sm text-slate-700">
+                                        <div>A. Both of them should try to understand each other and communicate openly.</div>
+                                        <div>B. The teenager should only use phone calls from now on.</div>
+                                        <div>C. The grandmother should switch to texting like young people.</div>
+                                        <div>D. They should decide whose way of communicating is better.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 2 -->
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-semibold text-slate-800 mb-2">Part 2. Listen to a talk about future smart cities. Decide whether the following statements are True (T) or False (F).</h4>
+                            <p class="text-xs text-slate-500 mb-4 italic">(You will listen to the recording TWICE)</p>
+
+                            <div class="space-y-3">
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p><span class="font-semibold">Question 6.</span> The lecturer suggests that a city becomes “smart” as soon as it owns the latest gadgets.</p>
+                                </div>
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p><span class="font-semibold">Question 7.</span> The lecturer says smart cities use data and the Internet of Things (IoT) to improve the quality of life for citizens.</p>
+                                </div>
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p><span class="font-semibold">Question 8.</span> According to the lecturer, smart grids help manage water usage more efficiently.</p>
+                                </div>
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p><span class="font-semibold">Question 9.</span> Sensors on waste bins can help a city save time and fuel.</p>
+                                </div>
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p><span class="font-semibold">Question 10.</span> Smart cities should consider data privacy when using technology.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION II: LANGUAGE -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <h3 class="font-bold text-blue-900 uppercase text-base border-l-4 border-blue-600 pl-3 mb-4">
+                            II. LANGUAGE (2.5 points)
+                        </h3>
+
+                        <p class="text-sm italic font-medium text-slate-700 mb-3">Mark the letter A, B, C, or D on your answer sheet to indicate the word that differs from the other three in the position of primary stress in each of the following questions.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-semibold text-slate-800">Question 11.</p>
+                                <div class="grid grid-cols-2 gap-1 mt-1">
+                                    <div>A. advice</div>
+                                    <div>B. balance</div>
+                                    <div>C. diet</div>
+                                    <div>D. habit</div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-semibold text-slate-800">Question 12.</p>
+                                <div class="grid grid-cols-2 gap-1 mt-1">
+                                    <div>A. prefer</div>
+                                    <div>B. adapt</div>
+                                    <div>C. argue</div>
+                                    <div>D. agree</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-sm italic font-medium text-slate-700 mb-3">Mark the letter A, B, C, or D on your answer sheet to indicate the correct answer to each of the following questions.</p>
+
+                        <div class="space-y-3">
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 13. I ____________ my grandmother for three weeks, so I miss her a lot.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. didn’t see</div>
+                                    <div>B. haven’t seen</div>
+                                    <div>C. don’t see</div>
+                                    <div>D. won’t see</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 14. Teenagers ____________ listen to their parents’ advice because parents have more life experience.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. should</div>
+                                    <div>B. shouldn’t</div>
+                                    <div>C. needn’t</div>
+                                    <div>D. mustn’t</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 15. I ____________ that life in the city will be much easier thanks to new technology.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. am believing</div>
+                                    <div>B. believe</div>
+                                    <div>C. have been believing</div>
+                                    <div>D. was believing</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 16. Using public transport is an ________ way for city dwellers to reduce emissions and save money.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. efficient</div>
+                                    <div>B. efficiency</div>
+                                    <div>C. efficiently</div>
+                                    <div>D. inefficient</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 17. If you are a part of a (n) ________, you may live with your grandparents, aunts and uncles.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. generation gap</div>
+                                    <div>B. extended family</div>
+                                    <div>C. nuclear family</div>
+                                    <div>D. blended family</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 18. After a long day at work, my father always looks ____________.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. tiredly</div>
+                                    <div>B. tiring</div>
+                                    <div>C. tired</div>
+                                    <div>D. tiredness</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 19. Choose the word CLOSEST in meaning: Smart cities are built on new technologies to <u>improve</u> people's lives.</p>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                    <div>A. recover</div>
+                                    <div>B. affect</div>
+                                    <div>C. damage</div>
+                                    <div>D. enhance</div>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-50 p-3 rounded border border-slate-200 text-sm">
+                                <p class="font-medium">Question 20. Choose the word OPPOSITE in meaning: Although my father is in his sixties, he always <u>keeps up with the times</u>, so we rarely have trouble talking about new trends.</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
+                                    <div>A. stays out of touch with modern changes</div>
+                                    <div>B. follows the latest fashions</div>
+                                    <div>C. adapts easily to new technology</div>
+                                    <div>D. keeps in contact with young people</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION III: READING -->
+                    <div class="border-b border-slate-200 pb-6">
+                        <h3 class="font-bold text-blue-900 uppercase text-base border-l-4 border-blue-600 pl-3 mb-4">
+                            III. READING (2.5 points)
+                        </h3>
+
+                        <!-- Passage 1 -->
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-6">
+                            <h4 class="font-semibold text-slate-800 mb-2">Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the option that best fits each of the numbered blanks from 21 to 25.</h4>
+                            
+                            <div class="bg-white p-4 rounded border border-slate-200 leading-relaxed text-sm text-slate-700 my-3 italic">
+                                <p class="font-semibold mb-2 text-center text-blue-800 uppercase">BRIDGING THE GENERATION GAP</p>
+                                <p>Family life is not always peaceful. Many teenagers argue with their parents because they have different opinions about studying, fashion and spending free time. Parents, (21) ________ grew up in a very different world, often worry that their children use smartphones too much. Teenagers, on the other hand, think that they should be allowed to make their own decisions. As a result, small arguments sometimes turn into serious conflicts at home.</p>
+                                <p class="mt-2">These differences are called the generation gap, and they are quite common in most families. They usually happen because each generation grows up in different conditions. For example, grandparents often depend (22) ________ newspapers and television for information, while teenagers get news from the Internet. (23) ________ the two generations have different habits, they can still understand each other if they try. Neither side is completely right or wrong.</p>
+                                <p class="mt-2">So how can families narrow the gap? First, both sides should listen to each other patiently and avoid shouting. Second, parents should show (24) ________ for their children's choices, and teenagers should value the experience of older people. Third, family members should spend more time doing activities together, such as cooking meals, going on trips or playing sports. These activities help everyone become closer and create (25) ________ bonds between family members.</p>
+                                <p class="mt-2">In short, the generation gap is not a serious problem if everyone is willing to listen, understand and share their feelings with patience and love.</p>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3 text-sm">
+                                <div class="bg-white p-2.5 rounded border border-slate-200">
+                                    <span class="font-semibold">Question 21:</span> A. which | B. who | C. whom | D. whose
+                                </div>
+                                <div class="bg-white p-2.5 rounded border border-slate-200">
+                                    <span class="font-semibold">Question 22:</span> A. in | B. on | C. at | D. for
+                                </div>
+                                <div class="bg-white p-2.5 rounded border border-slate-200">
+                                    <span class="font-semibold">Question 23:</span> A. Because | B. Although | C. Unless | D. So that
+                                </div>
+                                <div class="bg-white p-2.5 rounded border border-slate-200">
+                                    <span class="font-semibold">Question 24:</span> A. respect | B. blame | C. fear | D. surprise
+                                </div>
+                                <div class="bg-white p-2.5 rounded border border-slate-200 sm:col-span-2">
+                                    <span class="font-semibold">Question 25:</span> A. strength | B. strongly | C. strengthen | D. strong
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Passage 2 -->
+                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-semibold text-slate-800 mb-2">Read the following passage and mark the letter A, B, C, or D on your answer sheet to indicate the best answer to each of the questions from 26 to 30.</h4>
+
+                            <div class="bg-white p-4 rounded border border-slate-200 leading-relaxed text-sm text-slate-700 my-3">
+                                <p class="font-semibold mb-2 text-center text-blue-800 uppercase">CITIES OF THE FUTURE: BUILDING SMARTER AND GREENER</p>
+                                <p>By 2050, nearly seven out of ten people are expected to live in urban areas. This rapid growth puts enormous pressure on housing, transport and natural resources. Instead of simply building taller and bigger, urban planners around the world are now rethinking what a city should look like and how it should function.</p>
+                                <p class="mt-2">One of the most important changes is in the way people travel. Many cities are expanding their metro networks and replacing diesel buses with electric ones, while some European cities have introduced car-free zones in their centers. These measures have greatly reduced noise and air pollution, making streets quieter and safer for pedestrians.</p>
+                                <p class="mt-2">Buildings are changing as well. Green architecture, such as roofs covered with plants and walls fitted with solar panels, helps cut energy consumption and keeps interiors cool without air conditioning. Meanwhile, parks and vertical gardens are being added to crowded neighborhoods. <u>They</u> provide fresh air and places to relax, which improves residents’ well-being.</p>
+                                <p class="mt-2">Technology plays an equally important role. Many cities now use sensors to monitor traffic and air quality. They allow authorities to <u>adjust</u> traffic lights in real time and warn residents when pollution reaches dangerous levels. In addition, mobile apps enable citizens to report problems, such as broken streetlights, directly to local officials.</p>
+                                <p class="mt-2">However, a city of the future should not only be efficient but also fair. Experts stress that affordable housing and public services must be available to all residents; otherwise, modern facilities will benefit only wealthy people. Only when technology serves everyone can a city be truly livable.</p>
+                            </div>
+
+                            <div class="space-y-3 text-sm">
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-semibold">Question 26. What is the passage mainly about?</p>
+                                    <div class="space-y-1 mt-1 text-slate-700">
+                                        <div>A. The problems caused by the rapid growth of urban populations</div>
+                                        <div>B. The role of modern technology in managing traffic and pollution</div>
+                                        <div>C. Different strategies for making future cities more sustainable and liveable</div>
+                                        <div>D. The reasons why car-free zones should be introduced worldwide</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-semibold">Question 27. According to paragraph 2, some European cities have ____________.</p>
+                                    <div class="space-y-1 mt-1 text-slate-700">
+                                        <div>A. banned all public transport in their centres</div>
+                                        <div>B. introduced car-free zones in their centres</div>
+                                        <div>C. replaced metro networks with electric buses</div>
+                                        <div>D. built more roads to reduce traffic jams</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-semibold">Question 28. The word “adjust” in paragraph 4 is CLOSEST in meaning to ____________.</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-1 text-slate-700">
+                                        <div>A. modify</div>
+                                        <div>B. stop</div>
+                                        <div>C. record</div>
+                                        <div>D. remove</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-semibold">Question 29. The word “They” in paragraph 3 refers to ____________.</p>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 mt-1 text-slate-700">
+                                        <div>A. roofs and walls</div>
+                                        <div>B. solar panels</div>
+                                        <div>C. parks and vertical gardens</div>
+                                        <div>D. neighborhoods</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200">
+                                    <p class="font-semibold">Question 30. Which of the following is NOT mentioned in the passage as a way to build better cities?</p>
+                                    <div class="space-y-1 mt-1 text-slate-700">
+                                        <div>A. Expanding metro systems and using electric buses</div>
+                                        <div>B. Moving factories and offices to rural areas to reduce population density</div>
+                                        <div>C. Installing plants and solar panels on buildings</div>
+                                        <div>D. Allowing citizens to report urban problems through mobile applications</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SECTION IV: WRITING -->
+                    <div>
+                        <h3 class="font-bold text-blue-900 uppercase text-base border-l-4 border-blue-600 pl-3 mb-4">
+                            IV. WRITING (2.5 points)
+                        </h3>
+
+                        <!-- PART 1 -->
+                        <div class="mb-6 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <h4 class="font-semibold text-slate-800 mb-2">PART 1. Mark the letter A, B, C, or D on your answer sheet to indicate the best arrangement of utterances or sentences.</h4>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p class="font-semibold">Question 31.</p>
+                                    <p class="italic text-slate-600 my-1">a. Finally, serve the salad and enjoy your healthy meal.<br>b. First, wash the vegetables carefully.<br>c. Next, cut the vegetables into small pieces and put them in a bowl.</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                        <div>A. a - b - c</div>
+                                        <div>B. b - c - a</div>
+                                        <div>C. c - a - b</div>
+                                        <div>D. b - a - c</div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-slate-200 text-sm">
+                                    <p class="font-semibold">Question 32.</p>
+                                    <p class="italic text-slate-600 my-1">a. Lucy: That would be great! I hope the city will introduce it soon.<br>b. Ben: Do you think our city should have more electric buses?<br>c. Lucy: Yes, because they can help reduce air pollution.<br>d. Ben: I agree. They could also make public transport quieter.</p>
+                                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
+                                        <div>A. b - c - d - a</div>
+                                        <div>B. c - b - a - d</div>
+                                        <div>C. b - d - a - c</div>
+                                        <div>D. d - b - c - a</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PART 2, 3, 4: WRITTEN TASKS (DISPLAY REFERENCE) -->
+                        <div class="bg-amber-50 p-4 rounded-lg border border-amber-200">
+                            <h4 class="font-bold text-amber-900 mb-2 flex items-center">
+                                <i class="fa-solid fa-pen-nib mr-2"></i> PHẦN TỰ LUẬN (QUESTIONS 33 - 37)
+                            </h4>
+                            <p class="text-xs text-amber-800 mb-3">Lưu ý: Bạn nhập câu trả lời cho các câu tự luận ở vùng nhập liệu bên phải bên dưới phiếu trắc nghiệm.</p>
+                            
+                            <div class="space-y-3 text-sm text-slate-800">
+                                <div class="bg-white p-3 rounded border border-amber-200">
+                                    <p class="font-semibold text-slate-900">Question 33. Rewrite sentence:</p>
+                                    <p class="italic">"It is not necessary for you to wear uniforms at the weekend."</p>
+                                    <p class="text-xs font-semibold text-blue-700 mt-1">→ You ........................................................................</p>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-amber-200">
+                                    <p class="font-semibold text-slate-900">Question 34. Rewrite sentence:</p>
+                                    <p class="italic">"It is three years since I last saw my cousin."</p>
+                                    <p class="text-xs font-semibold text-blue-700 mt-1">→ I ........................................................................</p>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-amber-200">
+                                    <p class="font-semibold text-slate-900">Question 35. Combine sentences:</p>
+                                    <p class="italic">"They began working here in 2019. They still work here now."</p>
+                                    <p class="text-xs font-semibold text-blue-700 mt-1">→ They have ........................................................................</p>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-amber-200">
+                                    <p class="font-semibold text-slate-900">Question 36. Combine sentences:</p>
+                                    <p class="italic">"It is better for people to drink enough water every day. It keeps their bodies healthy."</p>
+                                    <p class="text-xs font-semibold text-blue-700 mt-1">→ People ........................................................................</p>
+                                </div>
+
+                                <div class="bg-white p-3 rounded border border-amber-200">
+                                    <p class="font-semibold text-slate-900">Question 37 (Part 4). Opinion Essay (120 - 150 words):</p>
+                                    <p class="italic text-xs text-slate-600 mt-1">"Some people think that students should be allowed to use smartphones in class to support their learning. Do you agree or disagree with this opinion? Give reasons and examples to support your answer."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RIGHT COLUMN: SCANTRON ANSWER SHEET & WRITING AREA (Lg: 5 cols) -->
+        <section class="lg:col-span-5 flex flex-col space-y-6">
+            
+            <!-- SCANTRON SHEET -->
+            <div id="scantron-container" class="scantron-paper rounded-xl p-4 sm:p-5 border-2 border-slate-900 text-xs select-none">
+                
+                <!-- Laser Scanner Effect Line -->
+                <div id="scanner-beam"></div>
+
+                <!-- Header Title of Scantron -->
+                <div class="text-center border-b-2 border-slate-900 pb-2 mb-3">
+                    <h2 class="font-black text-sm sm:text-base uppercase tracking-wider text-slate-900">PHIẾU TRẢ LỜI TRẮC NGHIỆM</h2>
+                    <div class="flex justify-between items-center text-[10px] text-slate-600 mt-1 font-mono">
+                        <span>Kỳ thi: Giữa HK I 2026-2027</span>
+                        <span>Môn: Tiếng Anh 11</span>
+                    </div>
+                </div>
+
+                <!-- Student Info Form Mockup -->
+                <div class="grid grid-cols-12 gap-2 border border-slate-400 p-2 rounded mb-4 bg-slate-50/50">
+                    <div class="col-span-7 space-y-1">
+                        <div><span class="font-semibold">Họ tên:</span> <input type="text" placeholder="Nguyễn Văn A text..." class="border-b border-slate-400 w-28 bg-transparent focus:outline-none px-1 text-[11px]"></div>
+                        <div><span class="font-semibold">Lớp:</span> <input type="text" placeholder="11A1" class="border-b border-slate-400 w-16 bg-transparent focus:outline-none px-1 text-[11px]"></div>
+                        <div><span class="font-semibold">SBD:</span> <input type="text" placeholder="123456" class="border-b border-slate-400 w-20 bg-transparent focus:outline-none px-1 text-[11px]"></div>
+                    </div>
+                    <div class="col-span-5 border-l border-slate-300 pl-2 text-center flex flex-col justify-center">
+                        <span class="text-[10px] text-slate-500 uppercase font-bold">Mã Đề Thi</span>
+                        <div class="text-lg font-black tracking-widest text-blue-900 my-0.5">014</div>
+                        <span class="text-[9px] text-slate-400">Phiếu UnT TN THPT</span>
+                    </div>
+                </div>
+
+                <!-- SCANTRON PART 1: 40 BUBBLE QUESTIONS (A, B, C, D) -->
+                <div class="mb-4">
+                    <div class="bg-slate-900 text-white font-bold px-2 py-0.5 mb-2 flex justify-between items-center rounded-t">
+                        <span>PHẦN I: Trắc nghiệm (Câu 1 - 32)</span>
+                        <span class="text-[10px] font-normal">Tô tròn ô đáp án chọn</span>
+                    </div>
+
+                    <!-- 4 Columns Grid layout for 32 questions -->
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-1.5 bg-slate-50 p-2 rounded border border-slate-200">
+                        <!-- Left Block: Q1 to Q16 -->
+                        <div class="space-y-1.5" id="scantron-p1-col1"></div>
+                        <!-- Right Block: Q17 to Q32 -->
+                        <div class="space-y-1.5" id="scantron-p1-col2"></div>
+                    </div>
+                </div>
+
+                <!-- SCANTRON PART 2: TRUE / FALSE BUBBLE MOCKUP (Questions 6-10 T/F inside Scantron format) -->
+                <div class="mb-2">
+                    <div class="bg-slate-800 text-white font-bold px-2 py-0.5 mb-1.5 rounded-t text-[11px] flex justify-between">
+                        <span>PHẦN II: Đúng / Sai (Part 2 Listening Q6-Q10)</span>
+                        <span class="text-[9px] font-normal">A: True | B: False</span>
+                    </div>
+                    <div class="grid grid-cols-5 gap-1 text-center bg-slate-50 p-2 rounded border border-slate-200" id="scantron-p2-container">
+                        <!-- Questions 6 to 10 mapped here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- ESSAY / WRITING AREA -->
+            <div class="bg-white rounded-xl p-4 sm:p-5 shadow-md border border-slate-200 space-y-4">
+                <div class="flex items-center justify-between border-b pb-2 border-slate-200">
+                    <h3 class="font-bold text-slate-800 flex items-center text-sm">
+                        <i class="fa-solid fa-pen-to-square text-amber-600 mr-2"></i> PHẦN LÀM BÀI TỰ LUẬN (WRITING)
+                    </h3>
+                    <span class="text-xs text-slate-400">Q33 - Q37</span>
+                </div>
+
+                <!-- Short Answer Writing (Q33 - Q36) -->
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Câu 33 (Viết lại câu 1):</label>
+                        <input type="text" id="ans-q33" placeholder="You ..." class="w-full border border-slate-300 rounded px-3 py-1.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Câu 34 (Viết lại câu 2):</label>
+                        <input type="text" id="ans-q34" placeholder="I ..." class="w-full border border-slate-300 rounded px-3 py-1.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Câu 35 (Kết hợp câu 1):</label>
+                        <input type="text" id="ans-q35" placeholder="They have ..." class="w-full border border-slate-300 rounded px-3 py-1.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+
+                    <div>
+                        <label class="font-semibold text-slate-700 block mb-1">Câu 36 (Kết hợp câu 2):</label>
+                        <input type="text" id="ans-q36" placeholder="People ..." class="w-full border border-slate-300 rounded px-3 py-1.5 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    </div>
+                </div>
+
+                <!-- Essay Area (Q37) -->
+                <div class="pt-2">
+                    <div class="flex justify-between items-center mb-1 text-xs">
+                        <label class="font-semibold text-slate-700">Câu 37: Bài luận Essay (120-150 words):</label>
+                        <span id="word-count" class="text-slate-500 font-mono text-[11px]">0 từ</span>
+                    </div>
+                    <textarea id="ans-essay" rows="5" oninput="updateWordCount()" placeholder="Write your essay about using smartphones in class here..." class="w-full border border-slate-300 rounded p-2.5 text-xs leading-relaxed focus:ring-2 focus:ring-blue-500 focus:outline-none font-sans"></textarea>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- RESULT & EXPLANATION MODAL -->
+    <div id="result-modal" class="fixed inset-0 bg-slate-900/70 z-50 flex items-center justify-center p-4 hidden backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-fade-in">
+            <!-- Modal Header -->
+            <div class="bg-gradient-to-r from-blue-900 to-slate-900 text-white p-5 flex justify-between items-center">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-xl shadow">
+                        <span id="score-text">0/10</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg">KẾT QUẢ BÀI THI - ĐỀ 14</h3>
+                        <p class="text-xs text-blue-200" id="summary-text">Đã chấm xong phần trắc nghiệm và ghi nhận bài tự luận</p>
+                    </div>
+                </div>
+                <button onclick="closeModal()" class="text-slate-300 hover:text-white p-2 text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content - Explanations -->
+            <div class="p-6 overflow-y-auto space-y-6 flex-1 text-sm text-slate-800" id="explanations-content">
+                <!-- Dynamic Explanations injected here -->
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="bg-slate-100 p-4 border-t border-slate-200 flex justify-end">
+                <button onclick="closeModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-medium px-5 py-2 rounded-lg text-sm transition">
+                    Đóng và xem phiếu chấm
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // OFFICIAL ANSWER KEY (36 Questions)
+        const answerKey = {
+            1: 'B', 2: 'D', 3: 'C', 4: 'B', 5: 'A',
+            6: 'B', 7: 'A', 8: 'B', 9: 'A', 10: 'A',
+            11: 'A', 12: 'C', 13: 'B', 14: 'A', 15: 'B',
+            16: 'A', 17: 'B', 18: 'C', 19: 'D', 20: 'A',
+            21: 'B', 22: 'B', 23: 'B', 24: 'A', 25: 'D',
+            26: 'C', 27: 'B', 28: 'A', 29: 'C', 30: 'B',
+            31: 'B', 32: 'A'
+        };
+
+        // EXPLANATIONS DATA FOR EACH QUESTION
+        const explanations = {
+            1: "Dr. Anna Hayes là nhà xã hội học (sociologist). (Dẫn chứng: 'we’re joined by sociologist Dr. Anna Hayes')",
+            2: "Công nghệ không phải nguyên nhân duy nhất nhưng thúc đẩy khoảng cách thế hệ tăng nhanh hơn. (Dẫn chứng: 'technology has certainly accelerated it')",
+            3: "Người trẻ thích nhắn tin còn ông/bà thích gọi điện. (Dẫn chứng: 'a teenager might prefer texting ... a grandparent prefers a phone call')",
+            4: "Giáo dục không được nhắc đến trong danh sách các chủ đề khác biệt. (Dẫn chứng: 'career choices, marriage and personal freedom')",
+            5: "Tôn trọng lẫn nhau và giao tiếp cởi mở là giải pháp được khuyến nghị. (Dẫn chứng: 'mutual respect and open communication')",
+            6: "False. Thành phố thông minh KHÔNG chỉ là sở hữu thiết bị mới nhất. (Dẫn chứng: 'It’s not just about having the latest gadgets')",
+            7: "True. Dữ liệu & IoT giúp nâng cao chất lượng cuộc sống. (Dẫn chứng: 'data and IoT to improve quality of life')",
+            8: "False. Smart grids quản lý năng lượng (energy), không phải lượng nước. (Dẫn chứng: 'manage energy consumption')",
+            9: "True. Cảm biến báo rác đầy giúp tiết kiệm thời gian và nhiên liệu. (Dẫn chứng: 'saving time and fuel')",
+            10: "True. Cần xem xét vấn đề bảo mật dữ liệu riêng tư. (Dẫn chứng: 'the issue of data privacy')",
+            11: "A. advice nhấn âm 2 (ad'VICE); balance, diet, habit đều nhấn âm 1.",
+            12: "C. argue nhấn âm 1 ('ARgue); prefer, adapt, agree đều nhấn âm 2.",
+            13: "B. haven't seen. Có 'for three weeks' nên dùng Thì Hiện tại hoàn thành.",
+            14: "A. should. Diễn tả lời khuyên nên nghe lời cha mẹ.",
+            15: "B. believe. Động từ chỉ trạng thái (stative verb) dùng Hiện tại đơn.",
+            16: "A. efficient. Trước danh từ 'way' cần tính từ (an efficient way).",
+            17: "B. extended family. Sống cùng ông bà, cô chú là gia đình nhiều thế hệ.",
+            18: "C. tired. Cấu trúc: look + adj (sau ngày dài trông mệt mỏi).",
+            19: "D. enhance. Improve ≈ enhance (cải thiện, nâng cao).",
+            20: "A. keeps up with the times (theo kịp thời đại) ↔ stays out of touch with modern changes (lạc hậu).",
+            21: "B. who. Mệnh đề quan hệ chỉ người làm chủ ngữ (Parents, who grew up...).",
+            22: "B. on. Cụm động từ cố định 'depend on' (phụ thuộc vào).",
+            23: "B. Although. Hai vế đối lập: Mặc dù khác thói quen nhưng vẫn hiểu nhau.",
+            24: "A. respect. 'show respect for' (tôn trọng lựa chọn của con).",
+            25: "D. strong. Bổ nghĩa cho danh từ 'bonds' cần tính từ strong (mối liên kết mạnh mẽ).",
+            26: "C. Bài đọc nói về các chiến lược xây dựng thành phố tương lai bền vững & đáng sống.",
+            27: "B. Một số thành phố châu Âu triển khai khu vực không ô tô (car-free zones).",
+            28: "A. adjust ≈ modify (điều chỉnh đèn giao thông theo thời gian thực).",
+            29: "C. 'They' thay thế cho chủ ngữ gần nhất: 'parks and vertical gardens'.",
+            30: "B. Bài đọc KHÔNG đề cập việc chuyển nhà máy về nông thôn.",
+            31: "B. Thứ tự chuẩn quy trình: First (b) -> Next (c) -> Finally (a).",
+            32: "A. Hội thoại hợp lý: b -> c -> d -> a."
+        };
+
+        // USER ANSWERS STORE
+        let userAnswers = {};
+
+        // INITIALIZE SCANTRON FORM
+        function initScantron() {
+            const col1 = document.getElementById('scantron-p1-col1');
+            const col2 = document.getElementById('scantron-p1-col2');
+
+            // Questions 1 - 32 Multiple Choice
+            for (let q = 1; q <= 32; q++) {
+                const qRow = document.createElement('div');
+                qRow.className = 'flex items-center justify-between bg-white px-2 py-1 rounded border border-slate-200 shadow-sm';
+                
+                let bubblesHTML = '';
+                ['A', 'B', 'C', 'D'].forEach(opt => {
+                    bubblesHTML += `
+                        <label class="inline-flex items-center cursor-pointer space-x-0.5">
+                            <input type="radio" name="q_${q}" value="${opt}" onchange="handleAnswerSelect(${q}, '${opt}')" class="bubble-input">
+                            <span class="text-[10px] font-bold text-slate-600">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                qRow.innerHTML = `
+                    <span class="font-bold text-slate-800 w-7 text-[11px]">Câu ${q}</span>
+                    <div class="flex items-center space-x-2 sm:space-x-3">
+                        ${bubblesHTML}
+                    </div>
+                `;
+
+                if (q <= 16) {
+                    col1.appendChild(qRow);
+                } else {
+                    col2.appendChild(qRow);
+                }
+            }
+
+            // Questions 6 - 10 True/False mapping box (Visual layout)
+            const p2Container = document.getElementById('scantron-p2-container');
+            for (let q = 6; q <= 10; q++) {
+                const tfBox = document.createElement('div');
+                tfBox.className = 'bg-white p-1.5 rounded border border-slate-300 text-center space-y-1';
+                tfBox.innerHTML = `
+                    <span class="font-bold text-slate-800 block text-[10px]">Câu ${q}</span>
+                    <div class="flex justify-center space-x-2">
+                        <label class="flex flex-col items-center cursor-pointer">
+                            <input type="radio" name="tf_q_${q}" value="A" onchange="syncTFAnswer(${q}, 'A')" class="bubble-input">
+                            <span class="text-[9px] font-semibold text-emerald-700 mt-0.5">T(A)</span>
+                        </label>
+                        <label class="flex flex-col items-center cursor-pointer">
+                            <input type="radio" name="tf_q_${q}" value="B" onchange="syncTFAnswer(${q}, 'B')" class="bubble-input">
+                            <span class="text-[9px] font-semibold text-rose-700 mt-0.5">F(B)</span>
+                        </label>
+                    </div>
+                `;
+                p2Container.appendChild(tfBox);
+            }
+        }
+
+        // SYNC TRUE/FALSE SELECTIONS WITH SCANNABLE ANSWERS
+        function syncTFAnswer(qNum, value) {
+            userAnswers[qNum] = value;
+            playPencilSound();
+            // Sync with Part 1 radio input if present
+            const radio = document.querySelector(`input[name="q_${qNum}"][value="${value}"]`);
+            if (radio) radio.checked = true;
+        }
+
+        // HANDLE ANSWER SELECTION
+        function handleAnswerSelect(qNum, opt) {
+            userAnswers[qNum] = opt;
+            playPencilSound();
+
+            // Sync with Part 2 T/F display if q is 6..10
+            if (qNum >= 6 && qNum <= 10) {
+                const tfRadio = document.querySelector(`input[name="tf_q_${qNum}"][value="${opt}"]`);
+                if (tfRadio) tfRadio.checked = true;
+            }
+        }
+
+        // AUDIO PLAYER CUSTOM LOGIC & LOCAL FILE LOADER
+        const audioPlayer = document.getElementById('main-audio-player');
+
+        function loadLocalAudio(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const fileURL = URL.createObjectURL(file);
+                audioPlayer.src = fileURL;
+                document.getElementById('loaded-filename').textContent = `Đã chọn: ${file.name}`;
+                document.getElementById('loaded-filename').className = "text-[11px] text-emerald-400 font-semibold";
+                audioPlayer.play();
+                updatePlayBtnUI(true);
+            }
+        }
+
+        function toggleAudioPlay() {
+            if (!audioPlayer.src) {
+                alert("Vui lòng bấm 'Chọn file MP3' để tải file bài nghe của bạn vào hệ thống!");
+                return;
+            }
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                updatePlayBtnUI(true);
+            } else {
+                audioPlayer.pause();
+                updatePlayBtnUI(false);
+            }
+        }
+
+        function updatePlayBtnUI(isPlaying) {
+            const icon = document.getElementById('audio-play-icon');
+            const text = document.getElementById('audio-play-text');
+            if (isPlaying) {
+                icon.className = 'fa-solid fa-pause';
+                text.textContent = 'Tạm dừng';
+            } else {
+                icon.className = 'fa-solid fa-play';
+                text.textContent = 'Phát';
+            }
+        }
+
+        function skipAudio(seconds) {
+            if (audioPlayer.src) {
+                audioPlayer.currentTime = Math.max(0, Math.min(audioPlayer.duration || 0, audioPlayer.currentTime + seconds));
+            }
+        }
+
+        function seekAudio(percent) {
+            if (audioPlayer.src && audioPlayer.duration) {
+                audioPlayer.currentTime = (percent / 100) * audioPlayer.duration;
+            }
+        }
+
+        function setPlaybackSpeed(speed) {
+            if (audioPlayer) {
+                audioPlayer.playbackRate = speed;
+                const btns = document.querySelectorAll('.speed-btn');
+                btns.forEach(btn => {
+                    if (parseFloat(btn.textContent) === speed) {
+                        btn.className = 'speed-btn px-1.5 py-0.5 rounded text-[11px] bg-blue-600 text-white font-bold';
+                    } else {
+                        btn.className = 'speed-btn px-1.5 py-0.5 rounded text-[11px] hover:bg-slate-700';
+                    }
+                });
+            }
+        }
+
+        function formatTime(sec) {
+            if (isNaN(sec)) return '00:00';
+            const m = Math.floor(sec / 60).toString().padStart(2, '0');
+            const s = Math.floor(sec % 60).toString().padStart(2, '0');
+            return `${m}:${s}`;
+        }
+
+        audioPlayer.ontimeupdate = function() {
+            if (audioPlayer.duration) {
+                const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+                document.getElementById('audio-seek-bar').value = pct;
+                document.getElementById('audio-curr-time').textContent = formatTime(audioPlayer.currentTime);
+                document.getElementById('audio-dur-time').textContent = formatTime(audioPlayer.duration);
+            }
+        };
+
+        audioPlayer.onended = function() {
+            updatePlayBtnUI(false);
+        };
+
+        // REALISTIC WEB AUDIO API - MULTI-LAYERED PENCIL GRAPHITE SHADING SYNTHESIZER
+        function playPencilSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+
+                // Generate 2 quick consecutive strokes (Scratch-Scratch sound of filling a bubble)
+                const strokeTimes = [0, 0.07];
+
+                strokeTimes.forEach((delay) => {
+                    const duration = 0.06; // 60ms per pencil stroke
+                    const bufferSize = ctx.sampleRate * duration;
+                    const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                    const data = buffer.getChannelData(0);
+
+                    // Filtered White Noise with realistic envelope
+                    for (let i = 0; i < bufferSize; i++) {
+                        // Friction modulation simulating paper texture roughness
+                        const env = Math.sin((i / bufferSize) * Math.PI);
+                        data[i] = (Math.random() * 2 - 1) * env;
+                    }
+
+                    const noise = ctx.createBufferSource();
+                    noise.buffer = buffer;
+
+                    // Bandpass filter to sound like soft B/2B lead pencil on paper
+                    const filter = ctx.createBiquadFilter();
+                    filter.type = 'bandpass';
+                    filter.frequency.setValueAtTime(1400 + (Math.random() * 400 - 200), ctx.currentTime + delay);
+                    filter.Q.value = 1.8;
+
+                    const gain = ctx.createGain();
+                    gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+                    gain.gain.linearRampToValueAtTime(0.35, ctx.currentTime + delay + 0.015);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+
+                    noise.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(ctx.destination);
+
+                    noise.start(ctx.currentTime + delay);
+                });
+            } catch(e) {
+                console.log("Audio synth error:", e);
+            }
+        }
+
+        // WEB AUDIO API - SCANNER LASER SOUND SYNTHESIZER
+        function playScannerSound() {
+            try {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                if (!AudioContext) return;
+                const ctx = new AudioContext();
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = 'sawtooth';
+                // Frequency sweep for scanner sound
+                osc.frequency.setValueAtTime(300, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 1.2);
+                osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 2.4);
+
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 2.5);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start();
+                osc.stop(ctx.currentTime + 2.5);
+            } catch(e) {
+                console.log("Scanner sound error:", e);
+            }
+        }
+
+        // COUNTDOWN TIMER LOGIC
+        let timerSeconds = 45 * 60; // 45 minutes
+        let timerInterval = null;
+        let isTimerRunning = false;
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+            const s = (timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('timer-display').textContent = `${m}:${s}`;
+        }
+
+        function toggleTimer() {
+            const btnIcon = document.getElementById('timer-icon');
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+                btnIcon.className = 'fa-solid fa-play';
+            } else {
+                isTimerRunning = true;
+                btnIcon.className = 'fa-solid fa-pause';
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        alert("Đã hết thời gian làm bài! Tự động nộp bài.");
+                        gradeExam();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isTimerRunning = false;
+            document.getElementById('timer-icon').className = 'fa-solid fa-play';
+            timerSeconds = 45 * 60;
+            updateTimerDisplay();
+        }
+
+        // WORD COUNT FOR ESSAY
+        function updateWordCount() {
+            const text = document.getElementById('ans-essay').value.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            document.getElementById('word-count').textContent = `${words} từ`;
+        }
+
+        // CONFIRM SUBMIT
+        function confirmSubmit() {
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < 32) {
+                if (!confirm(`Bạn mới hoàn thành ${answeredCount}/32 câu trắc nghiệm. Bạn có chắc chắn muốn nộp bài?`)) {
+                    return;
+                }
+            }
+            gradeExam();
+        }
+
+        // GRADE EXAM WITH LASER SCANNER ANIMATION
+        function gradeExam() {
+            // Stop timer
+            if (isTimerRunning) toggleTimer();
+
+            // Start Scanner Animation & Sound
+            const scantron = document.getElementById('scantron-container');
+            scantron.classList.add('scanning');
+            playScannerSound();
+
+            // Delay grading reveal until scan finishes
+            setTimeout(() => {
+                scantron.classList.remove('scanning');
+                processGradingResults();
+            }, 2500);
+        }
+
+        function processGradingResults() {
+            let correctCount = 0;
+            let explanationHTML = '';
+
+            // Calculate Score (32 MCQs = 8 pts, Written = 2 pts display demo)
+            for (let q = 1; q <= 32; q++) {
+                const userAns = userAnswers[q];
+                const keyAns = answerKey[q];
+                const isCorrect = (userAns === keyAns);
+
+                if (isCorrect) correctCount++;
+
+                // Highlight bubbles on Scantron
+                const radios = document.querySelectorAll(`input[name="q_${q}"]`);
+                radios.forEach(radio => {
+                    if (radio.value === keyAns) {
+                        radio.classList.add('bubble-correct');
+                    } else if (radio.checked && radio.value !== keyAns) {
+                        radio.classList.add('bubble-wrong');
+                    }
+                });
+
+                // Generate Explanations
+                const statusBadge = isCorrect 
+                    ? '<span class="px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-800">Đúng</span>'
+                    : `<span class="px-2 py-0.5 rounded text-xs font-bold bg-rose-100 text-rose-800">Sai (Chọn: ${userAns || 'Bỏ trống'})</span>`;
+
+                explanationHTML += `
+                    <div class="p-3.5 rounded-lg border ${isCorrect ? 'border-emerald-200 bg-emerald-50/40' : 'border-rose-200 bg-rose-50/40'}">
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="font-bold text-slate-800">Câu ${q}: Đáp án đúng là <span class="text-blue-700 font-black">${keyAns}</span></span>
+                            ${statusBadge}
+                        </div>
+                        <p class="text-xs text-slate-600 italic mt-1">Lời giải: ${explanations[q] || 'Không có giải thích chi tiết.'}</p>
+                    </div>
+                `;
+            }
+
+            // Written sample answers feedback
+            const q33Val = document.getElementById('ans-q33').value;
+            const q34Val = document.getElementById('ans-q34').value;
+            const q35Val = document.getElementById('ans-q35').value;
+            const q36Val = document.getElementById('ans-q36').value;
+
+            explanationHTML += `
+                <div class="mt-6 border-t-2 border-slate-200 pt-4">
+                    <h4 class="font-bold text-blue-900 mb-3 text-base">ĐÁP ÁN THAM KHẢO PHẦN TỰ LUẬN</h4>
+                    <div class="space-y-3 text-xs bg-slate-50 p-4 rounded-lg border border-slate-200">
+                        <div>
+                            <p class="font-semibold text-slate-800">Câu 33: "You don’t have to wear uniforms at the weekend." / "You needn’t wear..."</p>
+                            <p class="text-slate-500">Bài làm của bạn: <span class="italic text-slate-900">${q33Val || '(Bỏ trống)'}</span></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-800">Câu 34: "I haven’t seen my cousin for three years."</p>
+                            <p class="text-slate-500">Bài làm của bạn: <span class="italic text-slate-900">${q34Val || '(Bỏ trống)'}</span></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-800">Câu 35: "They have been working here since 2019." (hoặc "have worked")</p>
+                            <p class="text-slate-500">Bài làm của bạn: <span class="italic text-slate-900">${q35Val || '(Bỏ trống)'}</span></p>
+                        </div>
+                        <div>
+                            <p class="font-semibold text-slate-800">Câu 36: "People should drink enough water every day to keep their bodies healthy."</p>
+                            <p class="text-slate-500">Bài làm của bạn: <span class="italic text-slate-900">${q36Val || '(Bỏ trống)'}</span></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Calculate overall 10-point scale
+            const score10 = ((correctCount / 32) * 8).toFixed(2); // MCQs represent 8/10 points
+            document.getElementById('score-text').textContent = `${score10}/8.0`;
+            document.getElementById('summary-text').textContent = `Đúng ${correctCount}/32 câu trắc nghiệm (Tương đương ${score10}/8.0 điểm TN)`;
+
+            document.getElementById('explanations-content').innerHTML = explanationHTML;
+            document.getElementById('result-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('result-modal').classList.add('hidden');
+        }
+
+        // INITIALIZE APPLICATION ON WINDOW LOAD
+        window.onload = function() {
+            initScantron();
+            updateTimerDisplay();
+        };
+    </script>
+</body>
+</html>
